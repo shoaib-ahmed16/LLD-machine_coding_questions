@@ -1,16 +1,17 @@
 package com.machine.coding.LLDmachine_coding_questions.model;
 
 import com.machine.coding.LLDmachine_coding_questions.model.enums.GateType;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
-@Setter
+@Builder
 public class EntryGate extends Gate{
     private Integer gateNo;
     private Integer floorNo;
     public EntryGate(){
-        super(GateType.ENTRY);
+        super( GateType.ENTRY);
     }
 
     public EntryGate(Integer gateNo,Integer floorNo){
