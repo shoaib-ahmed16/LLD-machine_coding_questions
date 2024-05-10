@@ -14,30 +14,30 @@ public class ParkingSpotController {
     //Create a parking spot
     @PostMapping("/create")
     public ResponseEntity<ParkingSpot> createParkingSpot(@RequestBody ParkingSpot parkingSpot){
-        return  new ResponseEntity<>(ParkingSpot.builder().build(), HttpStatus.CREATED);
+        return  new ResponseEntity<>(null, HttpStatus.CREATED);
     }
 
     //Update a parking spot
     @PutMapping("/update")
     public ResponseEntity<ParkingSpot> updateParkingSpot(@RequestParam("id") Integer id, @RequestBody ParkingSpot parkingSpot){
-        return  new ResponseEntity<>(ParkingSpot.builder().build(), HttpStatus.CREATED);
+        return  new ResponseEntity<>(null, HttpStatus.CREATED);
     }
 
     //Get a parking Spot
     @GetMapping("/id")
     public ResponseEntity<ParkingSpot> getParkingSpot(@RequestParam("id") Integer id){
-        return  new ResponseEntity<>(ParkingSpot.builder().build(), HttpStatus.CREATED);
+        return  new ResponseEntity<>(null, HttpStatus.CREATED);
     }
     //Get list of Parking spot
     @GetMapping("/all")
     public ResponseEntity<List<ParkingSpot>> getAllParkingSpot(){
-        return  new ResponseEntity<>(List.of(ParkingSpot.builder().build()), HttpStatus.CREATED);
+        return  new ResponseEntity<>(null, HttpStatus.CREATED);
     }
 
     //delete a parking spot
     @DeleteMapping("/id")
     public ResponseEntity<ParkingSpot> deleteParkingSpot(@RequestParam("id") Integer id){
-        return  new ResponseEntity<>(ParkingSpot.builder().build(), HttpStatus.CREATED);
+        return  new ResponseEntity<>(null, HttpStatus.CREATED);
     }
 
 }

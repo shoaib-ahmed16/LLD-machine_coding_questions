@@ -2,7 +2,10 @@ package com.machine.coding.LLDmachine_coding_questions.model;
 
 
 import com.machine.coding.LLDmachine_coding_questions.model.enums.GateType;
+import lombok.*;
 
+@Getter
+@Builder
 public class ExitGate extends Gate{
     private Integer gateNo;
     private Integer floorNo;
