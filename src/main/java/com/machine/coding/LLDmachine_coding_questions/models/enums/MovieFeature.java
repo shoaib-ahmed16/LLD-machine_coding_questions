@@ -1,4 +1,4 @@
-package com.machine.coding.LLDmachine_coding_questions.model.enums;
+package com.machine.coding.LLDmachine_coding_questions.models.enums;
 
 public enum MovieFeature {
     THREE_D,

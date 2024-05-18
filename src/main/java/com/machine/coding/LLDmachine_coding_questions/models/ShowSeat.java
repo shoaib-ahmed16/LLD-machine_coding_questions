@@ -1,6 +1,6 @@
-package com.machine.coding.LLDmachine_coding_questions.model;
+package com.machine.coding.LLDmachine_coding_questions.models;
 
-import com.machine.coding.LLDmachine_coding_questions.model.enums.SeatStatus;
+import com.machine.coding.LLDmachine_coding_questions.models.enums.SeatStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.JoinColumn;

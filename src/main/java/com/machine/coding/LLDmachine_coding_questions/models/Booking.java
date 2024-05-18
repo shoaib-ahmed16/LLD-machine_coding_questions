@@ -1,6 +1,6 @@
-package com.machine.coding.LLDmachine_coding_questions.model;
+package com.machine.coding.LLDmachine_coding_questions.models;
 
-import com.machine.coding.LLDmachine_coding_questions.model.enums.BookingStatus;
+import com.machine.coding.LLDmachine_coding_questions.models.enums.BookingStatus;
 import jakarta.persistence.*;
 import lombok.*;
 

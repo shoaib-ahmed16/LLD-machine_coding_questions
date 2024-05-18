@@ -1,6 +1,6 @@
-package com.machine.coding.LLDmachine_coding_questions.model;
+package com.machine.coding.LLDmachine_coding_questions.models;
 
-import com.machine.coding.LLDmachine_coding_questions.model.enums.MovieFeature;
+import com.machine.coding.LLDmachine_coding_questions.models.enums.MovieFeature;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;

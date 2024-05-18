@@ -1,4 +1,4 @@
-package com.machine.coding.LLDmachine_coding_questions.model;
+package com.machine.coding.LLDmachine_coding_questions.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
