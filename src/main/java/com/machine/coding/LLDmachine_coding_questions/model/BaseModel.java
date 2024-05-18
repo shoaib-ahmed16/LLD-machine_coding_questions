@@ -1,16 +1,27 @@
 package com.machine.coding.LLDmachine_coding_questions.model;
 
-
+import jakarta.persistence.*;
 import lombok.Getter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
+@MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
 public abstract class BaseModel {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDateTime createdAt;
+    @CreatedDate
+    @Temporal(value = TemporalType.TIMESTAMP)
+    private Date createdAt;
 
-    private LocalDateTime updatedAt;
+    @LastModifiedDate
+    @Temporal(value = TemporalType.TIMESTAMP)
+    private Date updatedAt;
 
 }

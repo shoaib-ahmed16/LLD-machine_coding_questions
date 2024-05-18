@@ -1,6 +1,6 @@
 package com.machine.coding.LLDmachine_coding_questions.model;
 
-
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -9,15 +9,22 @@ import java.util.List;
 
 @Getter
 @Setter
+@Entity
+@Table(name = "shows")
 @NoArgsConstructor
 @Builder(toBuilder = true)
 @AllArgsConstructor
 public class Show extends BaseModel {
 
+    @ManyToOne
+    @JoinColumn(name = "movie_id")
     private Movie movie;
     private Date startTime;
     private Integer duration;
-    private List<ShowSeat> showSeats = new ArrayList<>();
 
-    private Screen screen;
+    @ManyToOne
+    private Hall hall;
+
+    @OneToMany(mappedBy = "show")
+    private List<ShowSeat> showSeats = new ArrayList<>();
 }

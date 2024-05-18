@@ -1,5 +1,6 @@
 package com.machine.coding.LLDmachine_coding_questions.model;
 
+import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,8 +8,9 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 public class User extends BaseModel {
-    private String name;
-    private String email;
+    private String username;
     private String password;
+
 }

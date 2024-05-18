@@ -1,27 +1,33 @@
 package com.machine.coding.LLDmachine_coding_questions.model;
 
 import com.machine.coding.LLDmachine_coding_questions.model.enums.BookingStatus;
+import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-
 @Getter
 @Setter
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 public class Booking extends BaseModel {
 
-    private User user;
+    @ManyToOne
+    private Customer customer;
+    @ManyToOne
     private Show show;
+    @ManyToMany
     private List<ShowSeat> seats = new ArrayList<>();
 
     private Double amount;
-    private LocalDateTime bookedAt;
+    private Date bookedAt;
 
+    @Enumerated
     private BookingStatus status;
 
+    @OneToMany
     private List<Payment> payments = new ArrayList<>();
 }
