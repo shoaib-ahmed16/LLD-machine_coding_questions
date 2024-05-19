@@ -11,7 +11,7 @@ public enum SeatType {
         return  this.amount;
     }
 
-    SeatType(Double amount) {
+    private SeatType(Double amount) {
         this.amount = amount;
     }
 

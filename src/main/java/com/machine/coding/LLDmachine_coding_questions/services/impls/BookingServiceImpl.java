@@ -16,11 +16,11 @@ import com.machine.coding.LLDmachine_coding_questions.services.CustomerService;
 import com.machine.coding.LLDmachine_coding_questions.services.ShowSeatService;
 import com.machine.coding.LLDmachine_coding_questions.services.ShowService;
 import com.machine.coding.LLDmachine_coding_questions.strategies.PricingStrategy;
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.awt.print.Book;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,51 +34,47 @@ public class BookingServiceImpl implements BookingService {
     private final ShowService showService;
     private final ShowSeatService showSeatService;
     private final PricingStrategy pricingStrategy;
-    @Transactional
+    @Transactional //(isolation = Isolation.SERIALIZABLE)
     @Override
     public Booking createBooking(CreateBookingDTO request) {
 
-        // Validate customer exist or not using customer id
         Customer customer = customerService.getCustomerInternal(request.getCustomerId())
                             .orElseThrow(() -> new CustomerNotFoundException("No Customer details found for the Id: "+request.getCustomerId())
                                 );
-        // validate show id
         Show show =showService.getShowInternallyById(request.getShowId())
                 .orElseThrow(()->new ShowNotFoundException("No Show Record found for the Id: "+request.getShowId()));
+        List<ShowSeat> showSeats =lockSeats(request);
 
-        // validate showSeats
-        List<ShowSeat> showSeats=showSeatService.getShowSeatInternally(request.getShowSeatIDs());
-        // - check if they are available
-
-            // Find all non-available seats
-            List<Long> nonAvailableSeatIds = showSeats.stream()
-                    .filter(showSeat -> showSeat.getStatus() != SeatStatus.AVAILABLE)
-                    .map(ShowSeat::getId)
-                    .collect(Collectors.toList());
-
-            // If there are any non-available seats, throw an exception
-            if (!nonAvailableSeatIds.isEmpty()) {
-                throw new SeatNotAvailableException(
-                        "Seats already booked for IDs: " + nonAvailableSeatIds.stream()
-                                .map(String::valueOf)
-                                .collect(Collectors.joining(", "))
-                );
-            }
-        // Lock the available seats if all are available
-        List<ShowSeat> lockedSeats=showSeats.stream().map(showSeat -> showSeat.toBuilder().status(SeatStatus.LOCKED).build()).toList();
-        // Save the seats
-        showSeatService.saveAllLockedSeats(lockedSeats);
-        // Save the Booking
         Booking booking = Booking.builder()
                                 .show(show)
                                 .customer(customer)
                                 .bookedAt(new Date())
                                 .status(BookingStatus.PENDING)
-                                .seats(lockedSeats)
+                                .seats(showSeats)
                                 .build();
-        Double amount= pricingStrategy.calculatePrice(booking,lockedSeats);
+        Double amount= pricingStrategy.calculatePrice(booking,showSeats);
         Booking withAmount =booking.toBuilder().amount(amount).build();
-
         return bookingRepository.save(withAmount);
+    }
+
+    @Transactional(isolation = Isolation.SERIALIZABLE)
+    private List<ShowSeat> lockSeats(CreateBookingDTO bookingRequest){
+        List<ShowSeat> showSeats=showSeatService.getShowSeatInternally(bookingRequest.getShowSeatIDs());
+
+        List<Long> nonAvailableSeatIds = showSeats.stream()
+                .filter(showSeat -> showSeat.getStatus() != SeatStatus.AVAILABLE)
+                .map(ShowSeat::getId)
+                .collect(Collectors.toList());
+
+        if (!nonAvailableSeatIds.isEmpty()) {
+            throw new SeatNotAvailableException(
+                    "Seats already booked for IDs: " + nonAvailableSeatIds.stream()
+                            .map(String::valueOf)
+                            .collect(Collectors.joining(", "))
+            );
+        }
+        List<ShowSeat> lockedSeats=showSeats.stream().map(showSeat -> showSeat.toBuilder().status(SeatStatus.LOCKED).build()).toList();
+        showSeatService.saveAllLockedSeats(lockedSeats);
+        return lockedSeats;
     }
 }
