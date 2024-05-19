@@ -10,6 +10,8 @@ import com.machine.coding.LLDmachine_coding_questions.services.MovieService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @AllArgsConstructor
 public class MovieServiceImpl implements MovieService {
@@ -32,5 +34,10 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public Movie getMovieByNameAndLanguageAndFeature(String name, Language lang, MovieFeature feature) {
         return null;
+    }
+
+    @Override
+    public Optional<Movie> getMovieInternalById(Long id) {
+        return movieRepository.findById(id);
     }
 }

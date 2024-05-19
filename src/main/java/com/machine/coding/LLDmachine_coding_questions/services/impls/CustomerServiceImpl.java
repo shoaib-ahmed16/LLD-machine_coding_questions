@@ -11,18 +11,13 @@ import com.machine.coding.LLDmachine_coding_questions.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @AllArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepository;
     private final UserService userService;
-    @Override
-    public Customer getCustomer(Long id) {
-        return customerRepository
-                .findById(id)
-                .orElseThrow(()-> new CustomerNotFoundException("No Customer record for the Customer Id :"+id));
-    }
-
     @Override
     public Customer createCustomer(CreateCustomerDTO dto) {
         // Validate if the email is not present
@@ -33,4 +28,17 @@ public class CustomerServiceImpl implements CustomerService {
         User user = userService.creatUser(dto.getUserName(),dto.getPassword());
         return customerRepository.save(dto.toEntity(user));
     }
+
+    @Override
+    public Customer getCustomer(Long id) {
+        return customerRepository
+                .findById(id)
+                .orElseThrow(()-> new CustomerNotFoundException("No Customer record for the Customer Id :"+id));
+    }
+
+    @Override
+    public Optional<Customer> getCustomerInternal(Long id) {
+        return customerRepository.findById(id);
+    }
+
 }

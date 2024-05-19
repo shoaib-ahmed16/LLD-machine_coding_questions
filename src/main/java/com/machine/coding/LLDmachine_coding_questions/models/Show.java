@@ -1,5 +1,6 @@
 package com.machine.coding.LLDmachine_coding_questions.models;
 
+import com.machine.coding.LLDmachine_coding_questions.models.enums.Language;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,10 +21,14 @@ public class Show extends BaseModel {
     @JoinColumn(name = "movie_id")
     private Movie movie;
     private Date startTime;
-    private Integer duration;
+    private Double duration;
 
     @ManyToOne
     private Hall hall;
+
+    @Enumerated(EnumType.ORDINAL)
+    private Language language;
+
 
     @OneToMany(mappedBy = "show")
     private List<ShowSeat> showSeats = new ArrayList<>();

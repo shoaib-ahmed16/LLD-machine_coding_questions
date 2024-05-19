@@ -19,7 +19,7 @@ import java.util.List;
 public class Movie extends BaseModel {
     private String name;
     private Double rating;
-
+    private Double duration;
     @ElementCollection
     @Enumerated
     private List<Language> languages = new ArrayList<>();

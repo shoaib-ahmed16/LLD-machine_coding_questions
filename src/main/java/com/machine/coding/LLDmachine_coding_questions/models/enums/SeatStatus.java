@@ -4,4 +4,5 @@ public enum SeatStatus {
     BOOKED,
     AVAILABLE,
     LOCKED,
+    NOT_IN_SERVICE;
 }

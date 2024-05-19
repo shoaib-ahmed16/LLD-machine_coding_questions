@@ -12,7 +12,7 @@ import lombok.*;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 public class ShowSeat extends BaseModel {
     @ManyToOne
     @JoinColumn(name = "show_id")
