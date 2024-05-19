@@ -30,3 +30,11 @@ public class Theatre extends BaseModel {
 }
 
 // 1. Which is the parent entity
+// - look at the cardinality
+// - The M side will have the reference
+
+// 2. Store the reference on the M side
+// - @JoinColumn(foreign_key)
+
+// 3. Connecting the bidirectional
+// -  mappedBy
